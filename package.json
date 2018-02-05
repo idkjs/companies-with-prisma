@@ -1,5 +1,5 @@
 {
-  "name": "companies-node",
+  "name": "companies-with-prisma",
   "scripts": {
     "start": "nodemon src/index.js",
     "dev": "npm-run-all --parallel start playground",
