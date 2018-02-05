@@ -90,6 +90,47 @@ type User {
 
 * run `primsa deploy` to effect schema changes.
 
+- edit schema.graphql to limit client query so cant see pass w
+
+```gql
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}
+```
+
+* signup mutation resolver to resolver script
+
+```js
+async function signup(parent, args, context, info) {
+  const password = await bcrypt.hash(args.password, 10);
+  const user = await context.db.mutation.createUser({
+    data: { ...args, password }
+  });
+
+  const token = jwt.sign({ userId: user.id }, APP_SECRET);
+
+  return {
+    token,
+    user
+  };
+}
+```
+
+* test query
+
+```gql
+mutation {
+  signup(email: "johndoe@graph.cool", password: "graphql", name: "John") {
+    token
+    user {
+      id
+    }
+  }
+}
+```
+
 ### Commands
 
 * `yarn start` starts GraphQL server on `http://localhost:4000`
