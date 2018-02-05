@@ -1,0 +1,24 @@
+mutation {
+  first: createPost(
+    data: {
+      name: "Agriconomie"
+      location: "Other"
+      youtube: "https://www.youtube.com/channel/UCo0QMlZUcF-WBP3C9koTLJw"
+      url: "http://www.agriconomie.com/"
+      description: "Agriconomie is the first and only marketplace entirely dedicated to agricultural supplies, allowing: - farmers to buy everything they need for their daily tasks directly online at a competitive price - physical suppliers to get online at zero cost, and immediately benefit from our significant audience (over 100K per month) to increase orders and revenue."
+      employees: "62"
+      sector: "#Retail #FoodTech"
+      logo: "https://d25e16a427ed3ce77d27-76b466cd72f6b3a6e7219a8a02851d8e.ssl.cf1.rackcdn.com/files/59382421ff3935420fa91518/size_5_agriconomiejpg.jpg"
+      facebook: "https://www.facebook.com/Agriconomie"
+      tranch: "41 - 100"
+      jobs: "undefined"
+      address: "11 Route Nationale 4, 51320 COOLE"
+      twitter: "@Agriconomie"
+      jobslink: "https://www.agriconomie.com/recrutement"
+      instagram: "undefined"
+      isPublished: true
+    }
+  ) {
+    id
+  }
+}
