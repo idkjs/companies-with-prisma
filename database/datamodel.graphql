@@ -22,6 +22,7 @@ type Company {
   facebook: String
   instagram: String
   youtube: String
+  postedBy: User
 }
 
 type User {
@@ -29,4 +30,5 @@ type User {
   name: String!
   email: String! @unique
   password: String!
+  companies: [Company!]!
 }

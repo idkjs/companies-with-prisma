@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { APP_SECRET } = require("../utils");
+const { APP_SECRET, getUserId } = require("../utils");
 
 async function signup(parent, args, context, info) {
   const password = await bcrypt.hash(args.password, 10);
@@ -16,47 +16,54 @@ async function signup(parent, args, context, info) {
   };
 }
 
-function post(parent, args, context, info) {
-  const {
-    name,
-    url,
-    logo,
-    employees,
-    tranch,
-    description,
-    location,
-    address,
-    jobs,
-    jobslink,
-    sector,
-    twitter,
-    facebook,
-    instagram,
-    youtube
-  } = args;
+function post(parent, { url, description }, context, info) {
+  const userId = getUserId(context);
   return context.db.mutation.createCompany(
-    {
-      data: {
-        name,
-        url,
-        logo,
-        employees,
-        tranch,
-        description,
-        location,
-        address,
-        jobs,
-        jobslink,
-        sector,
-        twitter,
-        facebook,
-        instagram,
-        youtube
-      }
-    },
+    { data: { url, description, postedBy: { connect: { id: userId } } } },
     info
   );
 }
+// function post(parent, args, context, info) {
+//   const {
+//     name,
+//     url,
+//     logo,
+//     employees,
+//     tranch,
+//     description,
+//     location,
+//     address,
+//     jobs,
+//     jobslink,
+//     sector,
+//     twitter,
+//     facebook,
+//     instagram,
+//     youtube
+//   } = args;
+//   return context.db.mutation.createCompany(
+//     {
+//       data: {
+//         name,
+//         url,
+//         logo,
+//         employees,
+//         tranch,
+//         description,
+//         location,
+//         address,
+//         jobs,
+//         jobslink,
+//         sector,
+//         twitter,
+//         facebook,
+//         instagram,
+//         youtube
+//       }
+//     },
+//     info
+//   );
+// }
 
 async function login(parent, args, context, info) {
   const user = await context.db.query.user({ where: { email: args.email } });

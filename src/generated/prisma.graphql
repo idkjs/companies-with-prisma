@@ -22,6 +22,7 @@ type Company implements Node {
   facebook: String
   instagram: String
   youtube: String
+  postedBy(where: UserWhereInput): User
 }
 
 type Post implements Node {
@@ -36,6 +37,7 @@ type User implements Node {
   name: String!
   email: String!
   password: String!
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company!]
 }
 
 
@@ -66,6 +68,30 @@ type CompanyConnection {
 }
 
 input CompanyCreateInput {
+  name: String
+  url: String!
+  logo: String
+  employees: String
+  tranch: String
+  description: String!
+  location: String
+  address: String
+  jobs: String
+  jobslink: String
+  sector: String
+  twitter: String
+  facebook: String
+  instagram: String
+  youtube: String
+  postedBy: UserCreateOneWithoutCompaniesInput
+}
+
+input CompanyCreateManyWithoutPostedByInput {
+  create: [CompanyCreateWithoutPostedByInput!]
+  connect: [CompanyWhereUniqueInput!]
+}
+
+input CompanyCreateWithoutPostedByInput {
   name: String
   url: String!
   logo: String
@@ -179,6 +205,45 @@ input CompanyUpdateInput {
   facebook: String
   instagram: String
   youtube: String
+  postedBy: UserUpdateOneWithoutCompaniesInput
+}
+
+input CompanyUpdateManyWithoutPostedByInput {
+  create: [CompanyCreateWithoutPostedByInput!]
+  connect: [CompanyWhereUniqueInput!]
+  disconnect: [CompanyWhereUniqueInput!]
+  delete: [CompanyWhereUniqueInput!]
+  update: [CompanyUpdateWithoutPostedByInput!]
+  upsert: [CompanyUpsertWithoutPostedByInput!]
+}
+
+input CompanyUpdateWithoutPostedByDataInput {
+  name: String
+  url: String
+  logo: String
+  employees: String
+  tranch: String
+  description: String
+  location: String
+  address: String
+  jobs: String
+  jobslink: String
+  sector: String
+  twitter: String
+  facebook: String
+  instagram: String
+  youtube: String
+}
+
+input CompanyUpdateWithoutPostedByInput {
+  where: CompanyWhereUniqueInput!
+  data: CompanyUpdateWithoutPostedByDataInput!
+}
+
+input CompanyUpsertWithoutPostedByInput {
+  where: CompanyWhereUniqueInput!
+  update: CompanyUpdateWithoutPostedByDataInput!
+  create: CompanyCreateWithoutPostedByInput!
 }
 
 input CompanyWhereInput {
@@ -408,6 +473,7 @@ input CompanyWhereInput {
   youtube_not_starts_with: String
   youtube_ends_with: String
   youtube_not_ends_with: String
+  postedBy: UserWhereInput
 }
 
 input CompanyWhereUniqueInput {
@@ -598,6 +664,18 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
+  companies: CompanyCreateManyWithoutPostedByInput
+}
+
+input UserCreateOneWithoutCompaniesInput {
+  create: UserCreateWithoutCompaniesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutCompaniesInput {
+  name: String!
+  email: String!
+  password: String!
 }
 
 type UserEdge {
@@ -648,6 +726,33 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  companies: CompanyUpdateManyWithoutPostedByInput
+}
+
+input UserUpdateOneWithoutCompaniesInput {
+  create: UserCreateWithoutCompaniesInput
+  connect: UserWhereUniqueInput
+  disconnect: UserWhereUniqueInput
+  delete: UserWhereUniqueInput
+  update: UserUpdateWithoutCompaniesInput
+  upsert: UserUpsertWithoutCompaniesInput
+}
+
+input UserUpdateWithoutCompaniesDataInput {
+  name: String
+  email: String
+  password: String
+}
+
+input UserUpdateWithoutCompaniesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutCompaniesDataInput!
+}
+
+input UserUpsertWithoutCompaniesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutCompaniesDataInput!
+  create: UserCreateWithoutCompaniesInput!
 }
 
 input UserWhereInput {
@@ -709,6 +814,9 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  companies_every: CompanyWhereInput
+  companies_some: CompanyWhereInput
+  companies_none: CompanyWhereInput
 }
 
 input UserWhereUniqueInput {
