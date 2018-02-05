@@ -16,10 +16,10 @@ async function signup(parent, args, context, info) {
   };
 }
 
-function post(parent, { url, description }, context, info) {
+function post(parent, { name, url, description }, context, info) {
   const userId = getUserId(context);
   return context.db.mutation.createCompany(
-    { data: { url, description, postedBy: { connect: { id: userId } } } },
+    { data: { name, url, description, postedBy: { connect: { id: userId } } } },
     info
   );
 }
