@@ -18,6 +18,47 @@ run `prisma import -d data.zip` where data.zip is path to data.
 
 ## Documentation
 
+## Queries
+
+* all companies feed
+
+```gql
+{
+  feed {
+    description
+    url
+    name
+    tranch
+    id
+  }
+}
+```
+
+* filtered
+
+```gql
+  feed(filter: "Attestation") {
+    description
+    url
+  }
+```
+
+## create post(new link/company)
+
+* in app section of playground run:
+
+```gql
+mutation {
+  post(
+    name: "TestPost"
+    url: "https://www.howtographql.com"
+    description: "Fullstack tutorial website for GraphQL"
+  ) {
+    id
+  }
+}
+```
+
 ### Commands
 
 * `yarn start` starts GraphQL server on `http://localhost:4000`

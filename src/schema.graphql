@@ -3,3 +3,23 @@
 type Query {
   feed(filter: String, skip: Int, first: Int): [Company!]!
 }
+
+type Mutation {
+  post(
+    name: String!
+    url: String!
+    logo: String
+    employees: String
+    tranch: String
+    description: String!
+    location: String
+    address: String
+    jobs: String
+    jobslink: String
+    sector: String
+    twitter: String
+    facebook: String
+    instagram: String
+    youtube: String
+  ): Company!
+}
