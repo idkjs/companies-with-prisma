@@ -274,11 +274,11 @@ Open `database/datamodel.graphql`, add a new `Vote` type and adjust the `User` a
 ```graphql{1-5,12,21}(path=".../companies-node/database/datamodel.graphql")
 type Vote {
   id: ID! @unique
-  link: Link!
+  company: Company!
   user: User!
 }
 
-type Link {
+type Company {
   id: ID! @unique
   description: String!
   url: String!
@@ -291,7 +291,7 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  links: [Link!]!
+  companyies: [Company!]!
   votes: [Vote!]!
 }
 ```
@@ -349,30 +349,30 @@ Open `src/resolvers/Mutation.js` and add the following function to it:
 
 ```js(path=".../companies-node/src/resolvers/Mutation.js")
 async function vote(parent, args, context, info) {
-  const userId = getUserId(context)
-  const { linkId } = args
-  const linkExists = await context.db.exists.Vote({
+  const userId = getUserId(context);
+  const { companyId } = args;
+  const companyExists = await context.db.exists.Vote({
     user: { id: userId },
-    link: { id: linkId },
-  })
-  if (linkExists) {
-    throw new Error(`Already voted for link: ${linkId}`)
+    company: { id: companyId }
+  });
+  if (companyExists) {
+    throw new Error(`Already voted for company: ${companyId}`);
   }
 
   return context.db.mutation.createVote(
     {
       data: {
         user: { connect: { id: userId } },
-        link: { connect: { id: linkId } },
-      },
+        company: { connect: { id: companyId } }
+      }
     },
-    info,
-  )
+    info
+  );
 }
 ```
 
 </Instruction>
 
-In the `vote` resolver, you're first retrieving the `userId` from the HTTP header again (using the familiar `getUserId` function you just implemented) so you can create the `Vote` on behalf of an actual `User`. What follows is a check to ensure the `Link` to be voted for actually exists. Lastly, the resolver invokes the `createVote` mutation from the Prisma API to create a new `Vote` in the database connecting the given `User` and `Link` nodes.
+In the `vote` resolver, you're first retrieving the `userId` from the HTTP header again (using the familiar `getUserId` function you just implemented) so you can create the `Vote` on behalf of an actual `User`. What follows is a check to ensure the `Company` to be voted for actually exists. Lastly, the resolver invokes the `createVote` mutation from the Prisma API to create a new `Vote` in the database connecting the given `User` and `Company` nodes.
 
 That's it! You can now restart the server and send the `vote` mutation in your `app` Playground.

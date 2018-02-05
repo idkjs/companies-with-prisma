@@ -23,6 +23,28 @@ function post(parent, { url, description }, context, info) {
     info
   );
 }
+
+async function vote(parent, args, context, info) {
+  const userId = getUserId(context);
+  const { companyId } = args;
+  const companyExists = await context.db.exists.Vote({
+    user: { id: userId },
+    company: { id: companyId }
+  });
+  if (companyExists) {
+    throw new Error(`Already voted for company: ${companyId}`);
+  }
+
+  return context.db.mutation.createVote(
+    {
+      data: {
+        user: { connect: { id: userId } },
+        company: { connect: { id: companyId } }
+      }
+    },
+    info
+  );
+}
 // function post(parent, args, context, info) {
 //   const {
 //     name,
@@ -87,5 +109,6 @@ async function login(parent, args, context, info) {
 module.exports = {
   post,
   signup,
-  login
+  login,
+  vote
 };

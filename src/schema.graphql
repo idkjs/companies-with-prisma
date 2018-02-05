@@ -1,4 +1,4 @@
-# import Company from "./generated/prisma.graphql"
+# import Company, Vote from "./generated/prisma.graphql"
 
 type Query {
   feed(filter: String, skip: Int, first: Int): [Company!]!
@@ -44,6 +44,7 @@ type Mutation {
   ): Company!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  vote(companyId: ID!): Vote
 }
 
 type User {

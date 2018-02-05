@@ -5,6 +5,12 @@ type Post {
   text: String!
 }
 
+type Vote {
+  id: ID! @unique
+  company: Company!
+  user: User!
+}
+
 type Company {
   id: ID! @unique
   name: String
@@ -23,6 +29,7 @@ type Company {
   instagram: String
   youtube: String
   postedBy: User
+  votes: [Vote!]!
 }
 
 type User {
@@ -31,4 +38,5 @@ type User {
   email: String! @unique
   password: String!
   companies: [Company!]!
+  votes: [Vote!]!
 }
