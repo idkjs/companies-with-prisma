@@ -12,6 +12,10 @@ WS: ws://localhost:4466/companies-node/dev
 }
 ```
 
+## import data
+
+run `prisma import -d data.zip` where data.zip is path to data.
+
 ## Documentation
 
 ### Commands
