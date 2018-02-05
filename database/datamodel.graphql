@@ -7,7 +7,7 @@ type Post {
 
 type Company {
   id: ID! @unique
-  name: String!
+  name: String
   url: String!
   logo: String
   employees: String

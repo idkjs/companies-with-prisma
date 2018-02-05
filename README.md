@@ -120,12 +120,109 @@ async function signup(parent, args, context, info) {
 
 * test query
 
+- in app default playground run:
+
 ```gql
 mutation {
   signup(email: "johndoe@graph.cool", password: "graphql", name: "John") {
     token
     user {
       id
+    }
+  }
+}
+```
+
+* output:
+
+```json
+{
+  "data": {
+    "signup": {
+      "token":
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjamRhbzVuNmkwMGtzMDEwN2F2NGg2dzBtIiwiaWF0IjoxNTE3ODYyNTIzfQ.zqL7vfOkZY9kKbElqxDZ7jXEMVOBnYnaaEpLQB6sRbk",
+      "user": {
+        "id": "cjdao5n6i00ks0107av4h6w0m"
+      }
+    }
+  }
+}
+```
+
+## Login Mutation
+
+1. Open src/schema.graphql and adjust the Mutation type so it looks as follows:
+
+```js
+type Mutation {
+  post(url: String!, description: String!): Company!
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+}
+```
+
+2. Next, you need to implement the resolver for this field.
+
+* Open src/resolvers/Mutation.js and add the following function to it:
+
+```js
+async function login(parent, args, context, info) {
+  const user = await context.db.query.user({ where: { email: args.email } });
+  if (!user) {
+    throw new Error(`Could not find user with email: ${args.email}`);
+  }
+
+  const valid = await bcrypt.compare(args.password, user.password);
+  if (!valid) {
+    throw new Error("Invalid password");
+  }
+
+  const token = jwt.sign({ userId: user.id }, APP_SECRET);
+
+  return {
+    token,
+    user,
+    login
+  };
+}
+```
+3. Export query mutation from schema.graphql
+
+```gql
+type Mutation {
+  post(url: String!, description: String!): Company!
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+}
+```
+4. Export the function from Mutation.js
+
+```js
+module.exports = {
+  post,
+  signup,
+  login
+};
+```
+
+4. Test in GraphiQL
+
+* run test mutation:
+
+```gql
+mutation {
+  login(email: "johndoe@graph.cool", password: "graphql") {
+    token
+  }
+}
+```
+
+- output:
+```json
+{
+  "data": {
+    "login": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjamRhbzVuNmkwMGtzMDEwN2F2NGg2dzBtIiwiaWF0IjoxNTE3ODYzMTUyfQ.Zv_tY4Y-b4Pch69ItSryfx9u7pbDUzNgVIMaqDCDDe4"
     }
   }
 }

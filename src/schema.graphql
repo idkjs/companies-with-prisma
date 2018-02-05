@@ -4,38 +4,39 @@ type Query {
   feed(filter: String, skip: Int, first: Int): [Company!]!
 }
 
-type Mutation {
-  post(
-    name: String!
-    url: String!
-    logo: String
-    employees: String
-    tranch: String
-    description: String!
-    location: String
-    address: String
-    jobs: String
-    jobslink: String
-    sector: String
-    twitter: String
-    facebook: String
-    instagram: String
-    youtube: String
-  ): Company!
-}
+# type Mutation {
+#   post(
+#     name: String!
+#     url: String!
+#     logo: String
+#     employees: String
+#     tranch: String
+#     description: String!
+#     location: String
+#     address: String
+#     jobs: String
+#     jobslink: String
+#     sector: String
+#     twitter: String
+#     facebook: String
+#     instagram: String
+#     youtube: String
+#   ): Company!
+# }
 
 type Mutation {
   post(url: String!, description: String!): Company!
   signup(email: String!, password: String!, name: String!): AuthPayload
-}
-
-type AuthPayload {
-  token: String
-  user: User
+  login(email: String!, password: String!): AuthPayload
 }
 
 type User {
   id: ID!
   name: String!
   email: String!
+}
+
+type AuthPayload {
+  token: String
+  user: User
 }
