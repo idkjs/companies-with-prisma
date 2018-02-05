@@ -5,7 +5,7 @@ type Post {
   text: String!
 }
 
-type Link {
+type Company {
   id: ID! @unique
   name: String!
   url: String!

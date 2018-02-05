@@ -5,7 +5,7 @@
 # Model Types
 #
 
-type Link implements Node {
+type Company implements Node {
   id: ID!
   name: String!
   url: String!
@@ -36,7 +36,7 @@ type Post implements Node {
 # Other Types
 #
 
-type AggregateLink {
+type AggregateCompany {
   count: Int!
 }
 
@@ -48,13 +48,13 @@ type BatchPayload {
   count: Long!
 }
 
-type LinkConnection {
+type CompanyConnection {
   pageInfo: PageInfo!
-  edges: [LinkEdge]!
-  aggregate: AggregateLink!
+  edges: [CompanyEdge]!
+  aggregate: AggregateCompany!
 }
 
-input LinkCreateInput {
+input CompanyCreateInput {
   name: String!
   url: String!
   logo: String
@@ -72,12 +72,12 @@ input LinkCreateInput {
   youtube: String
 }
 
-type LinkEdge {
-  node: Link!
+type CompanyEdge {
+  node: Company!
   cursor: String!
 }
 
-enum LinkOrderByInput {
+enum CompanyOrderByInput {
   id_ASC
   id_DESC
   name_ASC
@@ -116,7 +116,7 @@ enum LinkOrderByInput {
   createdAt_DESC
 }
 
-type LinkPreviousValues {
+type CompanyPreviousValues {
   id: ID!
   name: String!
   url: String!
@@ -135,24 +135,24 @@ type LinkPreviousValues {
   youtube: String
 }
 
-type LinkSubscriptionPayload {
+type CompanySubscriptionPayload {
   mutation: MutationType!
-  node: Link
+  node: Company
   updatedFields: [String!]
-  previousValues: LinkPreviousValues
+  previousValues: CompanyPreviousValues
 }
 
-input LinkSubscriptionWhereInput {
-  AND: [LinkSubscriptionWhereInput!]
-  OR: [LinkSubscriptionWhereInput!]
+input CompanySubscriptionWhereInput {
+  AND: [CompanySubscriptionWhereInput!]
+  OR: [CompanySubscriptionWhereInput!]
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: LinkWhereInput
+  node: CompanyWhereInput
 }
 
-input LinkUpdateInput {
+input CompanyUpdateInput {
   name: String
   url: String
   logo: String
@@ -170,9 +170,9 @@ input LinkUpdateInput {
   youtube: String
 }
 
-input LinkWhereInput {
-  AND: [LinkWhereInput!]
-  OR: [LinkWhereInput!]
+input CompanyWhereInput {
+  AND: [CompanyWhereInput!]
+  OR: [CompanyWhereInput!]
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -399,7 +399,7 @@ input LinkWhereInput {
   youtube_not_ends_with: String
 }
 
-input LinkWhereUniqueInput {
+input CompanyWhereUniqueInput {
   id: ID
 }
 
@@ -407,17 +407,17 @@ scalar Long
 
 type Mutation {
   createPost(data: PostCreateInput!): Post!
-  createLink(data: LinkCreateInput!): Link!
+  createCompany(data: CompanyCreateInput!): Company!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
-  updateLink(data: LinkUpdateInput!, where: LinkWhereUniqueInput!): Link
+  updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
   deletePost(where: PostWhereUniqueInput!): Post
-  deleteLink(where: LinkWhereUniqueInput!): Link
+  deleteCompany(where: CompanyWhereUniqueInput!): Company
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
-  upsertLink(where: LinkWhereUniqueInput!, create: LinkCreateInput!, update: LinkUpdateInput!): Link!
+  upsertCompany(where: CompanyWhereUniqueInput!, create: CompanyCreateInput!, update: CompanyUpdateInput!): Company!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
-  updateManyLinks(data: LinkUpdateInput!, where: LinkWhereInput!): BatchPayload!
+  updateManyCompanies(data: CompanyUpdateInput!, where: CompanyWhereInput!): BatchPayload!
   deleteManyPosts(where: PostWhereInput!): BatchPayload!
-  deleteManyLinks(where: LinkWhereInput!): BatchPayload!
+  deleteManyCompanies(where: CompanyWhereInput!): BatchPayload!
 }
 
 enum MutationType {
@@ -554,15 +554,15 @@ input PostWhereUniqueInput {
 
 type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
-  links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link]!
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
   post(where: PostWhereUniqueInput!): Post
-  link(where: LinkWhereUniqueInput!): Link
+  company(where: CompanyWhereUniqueInput!): Company
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
-  linksConnection(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LinkConnection!
+  companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
   node(id: ID!): Node
 }
 
 type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
-  link(where: LinkSubscriptionWhereInput): LinkSubscriptionPayload
+  company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
 }
