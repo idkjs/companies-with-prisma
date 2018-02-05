@@ -23,3 +23,19 @@ type Mutation {
     youtube: String
   ): Company!
 }
+
+type Mutation {
+  post(url: String!, description: String!): Company!
+  signup(email: String!, password: String!, name: String!): AuthPayload
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}

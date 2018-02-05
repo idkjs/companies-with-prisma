@@ -23,3 +23,10 @@ type Company {
   instagram: String
   youtube: String
 }
+
+type User {
+  id: ID! @unique
+  name: String!
+  email: String! @unique
+  password: String!
+}

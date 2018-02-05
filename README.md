@@ -59,6 +59,37 @@ mutation {
 }
 ```
 
+## signup/login mutations
+
+* add following to schema.graphql
+
+```gql
+type Mutation {
+  post(url: String!, description: String!): Link!
+  signup(email: String!, password: String!, name: String!): AuthPayload
+}
+
+#and
+
+type AuthPayload {
+  token: String
+  user: User
+}
+```
+
+* add to datamodel.graphql
+
+```gql
+type User {
+  id: ID! @unique
+  name: String!
+  email: String! @unique
+  password: String!
+}
+```
+
+* run `primsa deploy` to effect schema changes.
+
 ### Commands
 
 * `yarn start` starts GraphQL server on `http://localhost:4000`
