@@ -1,7 +1,7 @@
 # import Company, Vote, CompanySubscriptionPayload, VoteSubscriptionPayload from "./generated/prisma.graphql"
 
 type Query {
-  feed(filter: String, skip: Int, first: Int): [Company!]!
+  feed(filter: String, skip: Int, first: Int, id: ID): [Company!]!
 }
 
 type Subscription {

@@ -54,6 +54,36 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJoYWNrZXJuZXdzLWd
   }
 ```
 
+* filtered with id
+
+* modify schema.graphql feed query by adding arg `id` of type `ID`
+
+```graphql
+type Query {
+  feed(filter: String, skip: Int, first: Int, id: ID): [Company!]!
+}
+```
+
+* then add the params to the `feed` resolver in `resolvers/Query.js`
+
+```js
+function feed(parent, args, context, info) {
+  const { filter, first, skip } = args; // destructure input arguments
+  const where = filter
+    ? {
+        OR: [
+          { url_contains: filter },
+          { description_contains: filter },
+          { name_contains: filter },
+          { id: filter } //here
+        ]
+      }
+    : {};
+
+  return context.db.query.companies({ first, skip, where }, info);
+}
+```
+
 ## create post(new link/company)
 
 * in app section of playground run:
@@ -197,6 +227,7 @@ async function login(parent, args, context, info) {
   };
 }
 ```
+
 3. Export query mutation from schema.graphql
 
 ```gql
@@ -206,6 +237,7 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload
 }
 ```
+
 4. Export the function from Mutation.js
 
 ```js
@@ -228,12 +260,14 @@ mutation {
 }
 ```
 
-- output:
+* output:
+
 ```json
 {
   "data": {
     "login": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjamRhbzVuNmkwMGtzMDEwN2F2NGg2dzBtIiwiaWF0IjoxNTE3ODYzMTUyfQ.Zv_tY4Y-b4Pch69ItSryfx9u7pbDUzNgVIMaqDCDDe4"
+      "token":
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjamRhbzVuNmkwMGtzMDEwN2F2NGg2dzBtIiwiaWF0IjoxNTE3ODYzMTUyfQ.Zv_tY4Y-b4Pch69ItSryfx9u7pbDUzNgVIMaqDCDDe4"
     }
   }
 }

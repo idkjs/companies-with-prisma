@@ -5,7 +5,8 @@ function feed(parent, args, context, info) {
         OR: [
           { url_contains: filter },
           { description_contains: filter },
-          { name_contains: filter }
+          { name_contains: filter },
+          { id: filter }
         ]
       }
     : {};
