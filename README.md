@@ -3,6 +3,8 @@
 HTTP: http://localhost:4466/companies-node/dev
 WS: ws://localhost:4466/companies-node/dev
 
+For local dev use http://localhost:4000
+
 ## authorization
 
 ```json
@@ -15,6 +17,15 @@ WS: ws://localhost:4466/companies-node/dev
 ## import data
 
 run `prisma import -d data.zip` where data.zip is path to data.
+
+## prisma token
+
+run: `prisma token`
+output:
+
+```sh
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJoYWNrZXJuZXdzLWdyYXBocWwtanNAZGV2Iiwicm9sZXMiOlsiYWRtaW4iXX0sImlhdCI6MTUxNzg0MjM5NiwiZXhwIjoxNTE4NDQ3MTk2fQ.QK8B2VztgENDpBNlSGi0OfMQRqwi_skXyX1COp-vyUY
+```
 
 ## Documentation
 
