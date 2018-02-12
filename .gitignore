@@ -5,3 +5,5 @@ node_modules
 .idea
 .vscode
 *.log
+.DS_Store
+src/.DS_Store
