@@ -2,6 +2,64 @@
 
 type Query {
   feed(filter: String, skip: Int, first: Int, id: ID): [Company!]!
+  companies(
+    where: CompanyWhereInput
+    orderBy: CompanyOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Company]!
+  # votes(
+  #   where: VoteWhereInput
+  #   orderBy: VoteOrderByInput
+  #   skip: Int
+  #   after: String
+  #   before: String
+  #   first: Int
+  #   last: Int
+  # ): [Vote]!
+  # users(
+  #   where: UserWhereInput
+  #   orderBy: UserOrderByInput
+  #   skip: Int
+  #   after: String
+  #   before: String
+  #   first: Int
+  #   last: Int
+  # ): [User]!
+  company(where: CompanyWhereUniqueInput!): Company
+  # vote(where: VoteWhereUniqueInput!): Vote
+  # user(where: UserWhereUniqueInput!): User
+  # companiesConnection(
+  #   where: CompanyWhereInput
+  #   orderBy: CompanyOrderByInput
+  #   skip: Int
+  #   after: String
+  #   before: String
+  #   first: Int
+  #   last: Int
+  # ): CompanyConnection!
+  # votesConnection(
+  #   where: VoteWhereInput
+  #   orderBy: VoteOrderByInput
+  #   skip: Int
+  #   after: String
+  #   before: String
+  #   first: Int
+  #   last: Int
+  # ): VoteConnection!
+  # usersConnection(
+  #   where: UserWhereInput
+  #   orderBy: UserOrderByInput
+  #   skip: Int
+  #   after: String
+  #   before: String
+  #   first: Int
+  #   last: Int
+  # ): UserConnection!
+  # node(id: ID!): Node
 }
 
 type Subscription {
